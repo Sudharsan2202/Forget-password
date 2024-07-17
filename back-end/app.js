@@ -7,12 +7,12 @@ const cors =require("cors")
 const app = express();
 
 // app.use(cors());
-var corsOptions = {
-  origin: "http://localhost:5173/",
+const corsOptions = {
+  origin: "https://forget-password-fe-five.vercel.app/",
   credentials :true
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 const UserRouter =require("./Routes/user")
