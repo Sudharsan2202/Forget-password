@@ -11,5 +11,16 @@
     "mongoose": "^7.6.3",
     "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4"
-  }
+  },
+  "name": "back-end",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+     "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

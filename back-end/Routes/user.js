@@ -69,7 +69,7 @@ router.post('/forgot-password', async (req, res) => {
         from: 'sudhandev22@gmail.com',
         to: email,
         subject: 'Reset password',
-        text: `Click the following link to reset your password: http://localhost:5173/resetPassword/${token}`
+        text: `Click the following link to reset your password: https://forget-password-fe-five.vercel.app/resetPassword/${token}`
       };
   
       // Send email
@@ -111,12 +111,5 @@ router.post('/forgot-password', async (req, res) => {
       return res.status(500).json({ status: false, message: "Failed to reset password. Please try again later." });
     }
   });
-
-
-
-
-
-
-
 
   module.exports = router;
