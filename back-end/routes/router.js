@@ -106,43 +106,26 @@ router.post('/login', async (req, res) => {
 // reset-password route
 router.post('/reset-password/:token', async (req, res) => {
   const { token } = req.params;
-  const { password, repeatPassword } = req.body;
-
-  // console.log('Received token:', token);
-  // console.log('Received passwords:', password, repeatPassword);
-
-  if (!password || !repeatPassword) {
-    return res.status(400).json({ message: 'Password and repeat password are required' });
-  }
-
-  if (password !== repeatPassword) {
-    return res.status(400).json({ message: 'Passwords do not match' });
-  }
-
-  try {
-    const user = await User.findOne({
-      resetToken: token,
-      resetTokenExpiry: { $gt: Date.now() }
-    });
-
-    // console.log('Found user:', user);
-
-    if (!user) {
-      return res.status(400).json({ message: 'Invalid or expired reset token' });
+    const { password } = req.body;
+  
+    try {
+      // Check if the token is valid (you may want to implement this logic)
+  
+      // Decode the token and get user ID
+      const decodedToken = jwt.verify(token, process.env.KEY);
+      const userId = decodedToken.userId;
+  
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      // Update the user's password in the database
+      await User.findByIdAndUpdate(userId, { password: hashedPassword });
+  
+      return res.status(200).json({ status: true, message: "Password reset successfully." });
+    } catch (error) {
+      console.error("Error occurred while resetting password:", error);
+      return res.status(500).json({ status: false, message: "Failed to reset password. Please try again later." });
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    user.password = hashedPassword;
-    user.repeatPassword = hashedPassword;
-    user.resetToken = undefined;
-    user.resetTokenExpiry = undefined;
-    await user.save();
-
-    return res.status(200).json({ status: true, message: 'Password reset successfully.' });
-  } catch (error) {
-    console.error('Error occurred while resetting password:', error);
-    return res.status(500).json({ status: false, message: 'Failed to reset password. Please try again later.' });
-  }
 });
 
 
