@@ -5,13 +5,14 @@ const bodyParser =require("body-parser")
 require("dotenv").config();
 const cors =require("cors")
 const app = express();
+const cookieParser = require('cookie-parser')
 
 // app.use(cors());
 const corsOptions = {
   origin: "https://forget-password-fe-five.vercel.app/",
   credentials :true
 };
-
+app.use(cookieParser())
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
