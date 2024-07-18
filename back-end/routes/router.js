@@ -85,7 +85,7 @@ router.post('/login', async (req, res) => {
         from: 'sudhandev22@gmail.com',
         to: email,
         subject: 'Reset Password',
-        text: `Click the following link to reset your password: http://localhost:5174/reset-password/${token}`,
+        text: `Click the following link to reset your password: https://forget-password-fe-five.vercel.app/reset-password/${token}`,
       };
   
       transporter.sendMail(mailOptions, (error, info) => {
